@@ -136,3 +136,46 @@
     
     
 }(jQuery));
+
+var twopi		= Math.PI*2;
+var size		= { x: 1000, y: 1000 };
+
+var canvas		= document.querySelector('canvas');
+canvas.width	= size.x;
+canvas.height	= size.y;
+var c			= canvas.getContext('2d');
+
+var s			= [ 5 , 5 , 5 , 5 , 5 ];
+var e           = [ 3 , 3 , 3]
+var sum			= s.reduce(function(pv, cv) { return pv + cv; }, 0);
+
+var dist		= 0;
+
+function circle (linewidth, radius, mod) {
+	var pos			= 0;
+	c.lineWidth = linewidth;
+
+	c.moveTo(size.x*.5 + radius, size.y*.5);
+	for (var i = 0; i < s.length; i++) {
+
+		// "Color"
+		var co = parseInt(0xff / s.length * i + mod).toString(16);
+		if (co.length == 1) co = '0'+co;
+		c.strokeStyle = '#'+co+co+co;
+
+		// ArcStart
+		var cr	= twopi * pos;
+		pos		+= s[i] / sum;
+
+		c.beginPath();
+		c.arc(size.x*.5, size.y*.5, radius,
+			  (cr+dist)-Math.PI/2,
+			  cr-dist-Math.PI/2 + twopi * s[i] / sum
+		);
+		c.stroke();
+		c.closePath();
+	}
+}
+circle(200, size.x*.5 - 200*.4, -(0xff/s.length));	// Big circle
+circle(100, size.x*.4 - 205, 0xff/e.length);				// Inner circle
+//circle(10, size.x*.5 - 5, 0xff/s.length);				// Outer circle

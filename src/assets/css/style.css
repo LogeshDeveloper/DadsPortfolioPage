@@ -1742,4 +1742,19 @@ p.form-message.success, p.form-message.error {
         border-radius: 50%;
       }
 
+      canvas {
+        display: block;
+        width: 300px;
+        height: 300px;
+        margin: 0 auto;
+        animation: spin linear infinite 100s;
+        transform: rotateX(60deg);
+        border-radius: 100%;
+      }
+      
+      @keyframes spin {
+        0% { transform: rotateZ(0deg) }
+        100% { transform: rotateZ(360deg) }
+      }
+
 /*# sourceMappingURL=style.css.map */
